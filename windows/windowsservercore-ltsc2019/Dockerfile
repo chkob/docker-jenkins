@@ -68,7 +68,8 @@ ENV COPY_REFERENCE_FILE_LOG $JENKINS_HOME/copy_reference_file.log
 
 RUN Invoke-WebRequest -UseBasicParsing -Uri https://raw.githubusercontent.com/chkob/docker-jenkins/custom/windows/shares/jenkins-support.psm1 -OutFile "C:/ProgramData/Jenkins/jenkins-support.psm1"; `
     Invoke-WebRequest -UseBasicParsing -Uri https://raw.githubusercontent.com/chkob/docker-jenkins/custom/windows/shares/jenkins.ps1 -OutFile "C:/ProgramData/Jenkins/jenkins.ps1"; `
-    Invoke-WebRequest -UseBasicParsing -Uri https://raw.githubusercontent.com/chkob/docker-jenkins/custom/windows/shares/jenkins-plugin-cli.ps1 -OutFile "C:/ProgramData/Jenkins/jenkins-plugin-cli.ps1";
+    Invoke-WebRequest -UseBasicParsing -Uri https://raw.githubusercontent.com/chkob/docker-jenkins/custom/windows/shares/jenkins-plugin-cli.ps1 -OutFile "C:/ProgramData/Jenkins/jenkins-plugin-cli.ps1"; `
+    Invoke-WebRequest -UseBasicParsing -Uri https://raw.githubusercontent.com/chkob/docker-jenkins/custom/windows/shares/jenkins-plugins.yml -OutFile "C:/ProgramData/Jenkins/jenkins-plugins.yml";
 
 # See https://github.com/jenkinsci/plugin-installation-manager-tool#cli-options for information on parameters for jenkins-plugin-cli.ps1 for installing plugins into the docker image
 
