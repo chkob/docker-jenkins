@@ -66,10 +66,11 @@ EXPOSE ${agent_port}
 
 ENV COPY_REFERENCE_FILE_LOG $JENKINS_HOME/copy_reference_file.log
 
-COPY jenkins-support.psm1 C:/ProgramData/Jenkins
-COPY jenkins.ps1 C:/ProgramData/Jenkins
+RUN Invoke-WebRequest -UseBasicParsing -Uri https://raw.githubusercontent.com/chkob/docker-jenkins/custom/windows/shares/jenkins-support.psm1 -OutFile "C:/ProgramData/Jenkins/jenkins-support.psm1"; `
+    Invoke-WebRequest -UseBasicParsing -Uri https://raw.githubusercontent.com/chkob/docker-jenkins/custom/windows/shares/jenkins.ps1 -OutFile "C:/ProgramData/Jenkins/jenkins.ps1"; `
+    Invoke-WebRequest -UseBasicParsing -Uri https://raw.githubusercontent.com/chkob/docker-jenkins/custom/windows/shares/jenkins-plugin-cli.ps1 -OutFile "C:/ProgramData/Jenkins/jenkins-plugin-cli.ps1";
+
 # See https://github.com/jenkinsci/plugin-installation-manager-tool#cli-options for information on parameters for jenkins-plugin-cli.ps1 for installing plugins into the docker image
-COPY jenkins-plugin-cli.ps1 C:/ProgramData/Jenkins
 
 ENTRYPOINT ["powershell.exe", "-f", "C:/ProgramData/Jenkins/jenkins.ps1"]
 
