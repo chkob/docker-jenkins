@@ -1,5 +1,5 @@
 # escape=`
-FROM eclipse-temurin:11.0.14.1_1-jdk-windowsservercore-1809
+FROM cdaecha/docker-jdk:ltsc2019
 
 ARG user=jenkins
 ARG http_port=8080
