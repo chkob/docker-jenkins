@@ -18,15 +18,31 @@ VOLUME $JENKINS_HOME
 # Jenkins is run with user `jenkins`
 # If you bind mount a volume from the host or a data container,
 # ensure you use the same uid
-RUN New-LocalUser -Name $env:user -AccountNeverExpires -Description 'Jenkins User' -NoPassword -UserMayNotChangePassword | Out-Null ; `
-    Set-Localuser -Name $env:user -PasswordNeverExpires $true | Out-Null ; `
-    Add-LocalGroupMember -Group "Administrators" -Member "${env:user}" ; `
-    New-Item -Type Directory -Force -Path "C:/ProgramData/Jenkins" | Out-Null ; `
-    icacls.exe "C:/ProgramData/Jenkins" /setowner ${env:user} | Out-Null ; `
-    icacls.exe "C:/ProgramData/Jenkins" /inheritance:r | Out-Null ; `
-    icacls.exe "C:/ProgramData/Jenkins" /grant:r $('{0}:(CI)(OI)(F)' -f $env:user) /grant 'Administrators:(CI)(OI)(F)' | Out-Null ; `
-    icacls.exe "$env:JENKINS_HOME" /setowner ${env:user} | Out-Null ; `
-    icacls.exe "$env:JENKINS_HOME" /grant:r $('{0}:(CI)(OI)(F)' -f $env:user) /grant 'Administrators:(CI)(OI)(F)' | Out-Null
+#RUN New-LocalGroup -Name 'docker-users' -Description 'docker Users Group' | Out-Null ; `
+#    Add-LocalGroupMember -Group 'Administrators' -Member ('docker-users') –Verbose | Out-Null ; `
+#    New-LocalUser -Name $env:user -AccountNeverExpires -Description 'Jenkins User' -NoPassword -UserMayNotChangePassword | Out-Null ; `
+#    Set-Localuser -Name $env:user -PasswordNeverExpires $true | Out-Null ; `
+#    Add-LocalGroupMember -Group "Administrators" -Member "${env:user}" ; `
+#    Add-LocalGroupMember -Group 'docker-users' -Member "${env:user}" ; `
+#    New-Item -Type Directory -Force -Path "C:/ProgramData/Jenkins" | Out-Null ; `
+#    icacls.exe "C:/ProgramData/Jenkins" /setowner ${env:user} | Out-Null ; `
+#    icacls.exe "C:/ProgramData/Jenkins" /inheritance:r | Out-Null ; `
+#    icacls.exe "C:/ProgramData/Jenkins" /grant:r $('{0}:(CI)(OI)(F)' -f $env:user) /grant 'Administrators:(CI)(OI)(F)' | Out-Null ; `
+#    icacls.exe "$env:JENKINS_HOME" /setowner ${env:user} | Out-Null ; `
+#    icacls.exe "$env:JENKINS_HOME" /grant:r $('{0}:(CI)(OI)(F)' -f $env:user) /grant 'Administrators:(CI)(OI)(F)' | Out-Null
+
+RUN New-LocalGroup -Name 'docker-users' -Description 'docker Users Group' | Out-Null ;
+RUN Add-LocalGroupMember -Group 'Administrators' -Member ('docker-users') –Verbose | Out-Null ;
+RUN New-LocalUser -Name $env:user -AccountNeverExpires -Description 'Jenkins User' -NoPassword -UserMayNotChangePassword | Out-Null ;
+RUN Set-Localuser -Name $env:user -PasswordNeverExpires $true | Out-Null ;
+RUN Add-LocalGroupMember -Group "Administrators" -Member "${env:user}" ;
+RUN Add-LocalGroupMember -Group 'docker-users' -Member "${env:user}" ;
+RUN New-Item -Type Directory -Force -Path "C:/ProgramData/Jenkins" | Out-Null ;
+RUN icacls.exe "C:/ProgramData/Jenkins" /setowner ${env:user} | Out-Null ;
+RUN icacls.exe "C:/ProgramData/Jenkins" /inheritance:r | Out-Null ;
+RUN icacls.exe "C:/ProgramData/Jenkins" /grant:r $('{0}:(CI)(OI)(F)' -f $env:user) /grant 'Administrators:(CI)(OI)(F)' | Out-Null ;
+RUN icacls.exe "$env:JENKINS_HOME" /setowner ${env:user} | Out-Null ;
+RUN icacls.exe "$env:JENKINS_HOME" /grant:r $('{0}:(CI)(OI)(F)' -f $env:user) /grant 'Administrators:(CI)(OI)(F)' | Out-Null
 
 USER ${user}
 
