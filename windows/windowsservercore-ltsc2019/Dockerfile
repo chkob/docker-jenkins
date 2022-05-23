@@ -37,10 +37,10 @@ RUN New-Item -ItemType Directory -Force -Path C:/ProgramData/Jenkins/Reference/i
 
 # jenkins version being bundled in this docker image
 ARG JENKINS_VERSION
-ENV JENKINS_VERSION ${JENKINS_VERSION:-2.341}
+ENV JENKINS_VERSION ${JENKINS_VERSION:-2.332.3}
 
 # jenkins.war checksum, download will be validated using it
-ARG JENKINS_SHA=3ef754502e90d5a33d3b7ebca94ab85ced1fc6d0dfed6de8e89feb4019be505a
+ARG JENKINS_SHA=d193f179aadf3a7ceb61adebc3ab51218ac4a7852b88932ff33b44fd7be6010f
 
 # Can be used to customize where jenkins.war get downloaded from
 ARG JENKINS_URL=https://repo.jenkins-ci.org/public/org/jenkins-ci/main/jenkins-war/${JENKINS_VERSION}/jenkins-war-${JENKINS_VERSION}.war
